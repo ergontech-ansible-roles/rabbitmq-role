@@ -22,7 +22,7 @@
       vhost={{item.vhost|default('/')}}
       tags={{item.tags|default('')}}
   with_items: "{{rabbitmq_users}}"
-  
+
 
 - name: Enable configured plugins are installed
   rabbitmq_plugin:
