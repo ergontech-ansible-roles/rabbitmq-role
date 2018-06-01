@@ -1,0 +1,33 @@
+---
+
+- name: Add Erlang repository key
+  become: yes
+  apt_key:
+    url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+
+- name: Add Erlang repository
+  become: yes
+  apt_repository:
+    repo: "deb https://packages.erlang-solutions.com/ubuntu xenial contrib"
+    update_cache: yes
+
+- name: Ensure Erlang is installed
+  become: yes
+  apt:
+    pkg: erlang
+
+- name: Add RabbitMQ repository key
+  become: yes
+  apt_key:
+    url: https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc
+
+- name: Add RabbitMQ repository
+  become: yes
+  apt_repository:
+    repo: "deb https://dl.bintray.com/rabbitmq/debian xenial main"
+    update_cache: yes
+
+- name: Ensure RabbitMQ is installed
+  become: yes
+  apt:
+    pkg: rabbitmq-server
