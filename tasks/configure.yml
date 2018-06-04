@@ -24,6 +24,19 @@
   rabbitmq_plugin:
     names: "{{ item }}"
     state: enabled
+    new_only: yes
   with_items: "{{ rabbitmq_plugins }}"
+  notify:
+    - restart rabbitmq
+
+
+- name: Add configuration file
+  become: yes
+  template:
+    src: rabbitmq.conf.j2
+    dest: /etc/rabbitmq/rabbitmq.conf
+    owner: rabbitmq
+    group: rabbitmq
+    mode: 0644
   notify:
     - restart rabbitmq

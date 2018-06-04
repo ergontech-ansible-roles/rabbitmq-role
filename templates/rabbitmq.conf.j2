@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+
+{% for config, value in rabbitmq_config.items() %}
+
+{{ config }} = {{ value }}
+
+{% endfor %}

@@ -8,9 +8,9 @@
   tags:
     - rabbitmq
 
-- include: install.yml
-  tags:
-    - rabbitmq
+#- include: install.yml
+#  tags:
+#    - rabbitmq
 
 - include: configure.yml
   tags:
