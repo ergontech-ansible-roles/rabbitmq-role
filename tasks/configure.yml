@@ -1,0 +1,29 @@
+---
+
+- name: Ensure the guest user is removed
+  become: yes
+  rabbitmq_user:
+    user: guest
+    state: absent
+
+- name: Ensure users are present
+  become: yes
+  rabbitmq_user:
+      user: "{{ item.user }}"
+      password: "{{ item.password }}"
+      configure_priv: "{{ item.configure_priv | default('.*') }}"
+      read_priv: "{{ item.read_priv | default('.*') }}"
+      write_priv: "{{ item.write_priv | default('.*') }}"
+      vhost: "{{ item.vhost | default('/') }}"
+      tags: "{{ item.tags| default('') }}"
+  with_items: "{{rabbitmq_users}}"
+
+
+- name: Ensure plugins are present
+  become: yes
+  rabbitmq_plugin:
+    names: "{{ item }}"
+    state: enabled
+  with_items: "{{ rabbitmq_plugins }}"
+  notify:
+    - restart rabbitmq
