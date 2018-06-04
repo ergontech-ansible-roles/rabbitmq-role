@@ -31,3 +31,8 @@
   become: yes
   apt:
     pkg: rabbitmq-server
+
+- name: Ensure RabbitMQ is running
+  service:
+    name: rabbitmq-server
+    state: started

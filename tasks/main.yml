@@ -1,33 +1,17 @@
 ---
 
+
+- name: Fail if Rabbitmq is disabled
+  fail:
+    msg: "RabbitMQ is disabled"
+  when: not rabbitmq_enabled
+  tags:
+    - rabbitmq
+
 - include: install.yml
+  tags:
+    - rabbitmq
 
-- name: Ensure RabbitMQ is running
-  service:
-    name: rabbitmq-server
-    state: started
-
-- name: Ensure the guest user is removed
-  rabbitmq_user:
-    user: guest
-    state: absent
-
-- name: Ensure configured users are present
-  rabbitmq_user: >
-      user={{item.user}}
-      password={{item.password}}
-      configure_priv={{item.configure_priv|default('.*')}}
-      read_priv={{item.read_priv|default('.*')}}
-      write_priv={{item.write_priv|default('.*')}}
-      vhost={{item.vhost|default('/')}}
-      tags={{item.tags|default('')}}
-  with_items: "{{rabbitmq_users}}"
-
-
-- name: Enable configured plugins are installed
-  rabbitmq_plugin:
-    names: "{{item}}"
-    state: enabled
-  with_items: "{{rabbitmq_plugins}}"
-  notify:
-    - restart rabbitmq
+- include: configure.yml
+  tags:
+    - rabbitmq
