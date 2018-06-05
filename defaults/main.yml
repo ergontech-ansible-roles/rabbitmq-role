@@ -21,3 +21,5 @@ rabbitmq_users:
     read_priv: .*
     write_priv: .*
     tags: administrator
+
+rabbitmq_erlang_cookie: abc123

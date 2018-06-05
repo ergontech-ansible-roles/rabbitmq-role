@@ -40,3 +40,15 @@
     mode: 0644
   notify:
     - restart rabbitmq
+
+- name: Ensure Erglang cookie is the same across all nods
+  become: yes
+  template:
+    src: .erlang.cookie.j2
+    dest: "{{ item }}"
+    owner: rabbitmq
+    group: rabbitmq
+    mode: 0644
+  with_items:
+    - /var/lib/rabbitmq/.erlang.cookie
+    - /home/rabbitmq/.erlang.cookie

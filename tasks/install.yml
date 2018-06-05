@@ -27,6 +27,11 @@
     repo: "deb https://dl.bintray.com/rabbitmq/debian xenial main"
     update_cache: yes
 
+- name: Ensure RabbitMQ user is created
+  user:
+    name: rabbitmq
+    comment: user to run rabbitmq service
+
 - name: Ensure RabbitMQ is installed
   become: yes
   apt:
@@ -36,3 +41,4 @@
   service:
     name: rabbitmq-server
     state: started
+    group: sudo
