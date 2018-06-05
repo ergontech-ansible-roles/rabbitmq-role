@@ -1,0 +1,12 @@
+---
+
+- name: Ensure Erglang cookie is the same for rabbitmq user
+  become: yes
+  template:
+    src: .erlang.cookie.j2
+    dest: "{{ item }}"
+    owner: rabbitmq
+    group: rabbitmq
+    mode: 0600
+  with_items:
+    - /var/lib/rabbitmq/.erlang.cookie

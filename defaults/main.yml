@@ -23,3 +23,5 @@ rabbitmq_users:
     tags: administrator
 
 rabbitmq_erlang_cookie: abc123
+
+rabbitmq_clustering_enabled: true

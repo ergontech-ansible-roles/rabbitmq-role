@@ -15,3 +15,8 @@
 - include: configure.yml
   tags:
     - rabbitmq
+
+- include: clustering.yml
+  when: rabbitmq_clustering_enabled
+  tags:
+    - rabbitmq
