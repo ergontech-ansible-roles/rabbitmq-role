@@ -1,14 +1,12 @@
 ---
 
-
-- name: Fail if Rabbitmq is disabled
-  fail:
-    msg: "RabbitMQ is disabled"
-  when: not rabbitmq_enabled
+- include: install.yml
   tags:
     - rabbitmq
 
-- include: install.yml
+# Should happen before the configuration
+- include: clustering.yml
+  when: rabbitmq_clustering_enabled
   tags:
     - rabbitmq
 
@@ -16,7 +14,3 @@
   tags:
     - rabbitmq
 
-- include: clustering.yml
-  when: rabbitmq_clustering_enabled
-  tags:
-    - rabbitmq
