@@ -43,24 +43,4 @@
 
 
 
-- name: Ensure Erglang cookie is the same for root user
-  become: yes
-  template:
-    src: .erlang.cookie.j2
-    dest: "{{ item }}"
-    owner: root
-    group: root
-    mode: 0600
-  with_items:
-    - /root/.erlang.cookie
 
-- name: ensure the default vhost contains the HA policy via a dict
-  become: yes
-  rabbitmq_policy:
-    name: ha-all
-    pattern: ""
-    tags:
-      ha-mode: all
-      ha-sync-mode: automatic
-  notify:
-    - restart rabbitmq

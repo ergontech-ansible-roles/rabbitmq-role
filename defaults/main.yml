@@ -1,7 +1,5 @@
 ---
 
-rabbitmq_enabled: yes
-
 rabbitmq_plugins:
   - rabbitmq_management
   - rabbitmq_peer_discovery_aws
@@ -9,7 +7,6 @@ rabbitmq_plugins:
 rabbitmq_config:
   cluster_formation.peer_discovery_backend: rabbit_peer_discovery_aws
   cluster_formation.aws.region: us-west-2
-  cluster_formation.aws.use_private_ip: "true"
   cluster_formation.aws.use_autoscaling_group: "true"
 
 
