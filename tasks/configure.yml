@@ -6,7 +6,7 @@
     user: guest
     state: absent
 
-- name: Ensure users are present
+- name: Ensure configured users are present
   become: yes
   rabbitmq_user:
       user: "{{ item.user }}"
@@ -40,7 +40,3 @@
     mode: 0644
   notify:
     - restart rabbitmq
-
-
-
-

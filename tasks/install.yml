@@ -33,7 +33,7 @@
     pkg: rabbitmq-server
 
 - name: Ensure RabbitMQ is running
+  become: yes
   service:
     name: rabbitmq-server
     state: started
-    group: sudo

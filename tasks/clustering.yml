@@ -20,15 +20,23 @@
   become: yes
   rabbitmq_policy:
     name: ha-all
-    pattern: ""
+    pattern: .*
     tags:
       ha-mode: all
       ha-sync-mode: automatic
   notify:
     - restart rabbitmq
 
-- name: Reset nodes so they can join the cluster
+- name: Gather cluster information
+  become: yes
+  command: rabbitmqctl cluster_status
+  register: cluster_status
+  changed_when: false
+
+- name: Reset non-master nodes so they can join the cluster if they are not part of it already
+  become: yes
   command: "{{ item }}"
+  when: inventory_hostname != rabbitmq_master_node and cluster_status.stdout.find('rabbit@' ~ rabbitmq_master_hostname) == -1
   with_items:
     - rabbitmqctl stop_app
     - rabbitmqctl reset
