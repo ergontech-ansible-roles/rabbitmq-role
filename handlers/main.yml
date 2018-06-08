@@ -3,5 +3,5 @@
 - name: restart rabbitmq
   become: yes
   service:
-    name: rabbitmq
+    name: rabbitmq-server
     state: restarted

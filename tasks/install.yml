@@ -1,39 +1,33 @@
 ---
 
-- name: Add Erlang repository key
+- name: Add Rabbitmq and dependency repository keys
   become: yes
   apt_key:
-    url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+    url: "{{ item }}"
+  with_items:
+    - https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+    - https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc
 
-- name: Add Erlang repository
+- name: Add RabbitMQ and dependency repositories
   become: yes
   apt_repository:
-    repo: "deb https://packages.erlang-solutions.com/ubuntu xenial contrib"
+    repo: "{{ item }}"
     update_cache: yes
+  with_items:
+    - "deb https://packages.erlang-solutions.com/ubuntu xenial contrib"
+    - "deb https://dl.bintray.com/rabbitmq/debian xenial main"
 
-- name: Ensure Erlang is installed
+- name: Ensure RabbitMQ package and dependency packages are installed
   become: yes
   apt:
-    pkg: erlang
+    pkg: "{{ item }}"
+  with_items:
+    - rabbitmq-server
+    - erlang
 
-- name: Add RabbitMQ repository key
-  become: yes
-  apt_key:
-    url: https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc
-
-- name: Add RabbitMQ repository
-  become: yes
-  apt_repository:
-    repo: "deb https://dl.bintray.com/rabbitmq/debian xenial main"
-    update_cache: yes
-
-- name: Ensure RabbitMQ is installed
-  become: yes
-  apt:
-    pkg: rabbitmq-server
-
-- name: Ensure RabbitMQ is running
+- name: Ensure RabbitMQ is started
   become: yes
   service:
     name: rabbitmq-server
     state: started
+    enabled: yes
