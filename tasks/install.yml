@@ -1,0 +1,33 @@
+---
+
+- name: Add Rabbitmq and dependency repository keys
+  become: yes
+  apt_key:
+    url: "{{ item }}"
+  with_items:
+    - https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+    - https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc
+
+- name: Add RabbitMQ and dependency repositories
+  become: yes
+  apt_repository:
+    repo: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - "deb https://packages.erlang-solutions.com/ubuntu xenial contrib"
+    - "deb https://dl.bintray.com/rabbitmq/debian xenial main"
+
+- name: Ensure RabbitMQ package and dependency packages are installed
+  become: yes
+  apt:
+    pkg: "{{ item }}"
+  with_items:
+    - rabbitmq-server
+    - erlang
+
+- name: Ensure RabbitMQ is started
+  become: yes
+  service:
+    name: rabbitmq-server
+    state: started
+    enabled: yes

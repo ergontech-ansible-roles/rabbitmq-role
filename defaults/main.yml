@@ -1,12 +1,4 @@
-Rabbitmq Role
-=========
-
-
-Role Variables
---------------
-
-```
-# Any Vars?
+---
 
 rabbitmq_plugins:
   - rabbitmq_management
@@ -30,24 +22,3 @@ rabbitmq_users:
 rabbitmq_erlang_cookie: abc123
 
 rabbitmq_clustering_enabled: true
-
-# Required if clustering is enabled
-rabbitmq_master_node:
-rabbitmq_master_hostname:
-```
-
-----------------
-
-```
-#   requirements.yml
-#
-#   Example
-# - src: https://github.com/ergontech-ansible-roles/rabbitmq
-#   version: master
-#   name: rabbitmq
-```
-
-License
--------
-
-[MIT](LICENSE)

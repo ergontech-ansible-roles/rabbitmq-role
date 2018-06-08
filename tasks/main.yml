@@ -1,2 +1,16 @@
 ---
 
+- include: install.yml
+  tags:
+    - rabbitmq
+
+# Should happen before the configuration
+- include: clustering.yml
+  when: rabbitmq_clustering_enabled
+  tags:
+    - rabbitmq
+
+- include: configure.yml
+  tags:
+    - rabbitmq
+
